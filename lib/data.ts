@@ -7,6 +7,13 @@ export async function getShopByOwner(ownerId: string): Promise<Shop | null> {
   return data;
 }
 
+// サイトマップに公開ページを載せるために使う。
+export async function listShops(): Promise<Shop[]> {
+  const supabase = createServiceRoleClient();
+  const { data } = await supabase.from("rsv_shops").select("*").order("id");
+  return data ?? [];
+}
+
 export async function getShopBySlug(slug: string): Promise<Shop | null> {
   const supabase = createServiceRoleClient();
   const { data } = await supabase.from("rsv_shops").select("*").eq("slug", slug).maybeSingle();
